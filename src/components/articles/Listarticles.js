@@ -2,6 +2,7 @@ import React,{useEffect,useState,useCallback} from 'react'
 import { useDispatch } from "react-redux";
 import {getArticlespages} from "../../features/articleSlice";
 import Affichearticles from './AfficheArticles';
+
 const Listarticles = () => {
 
   const [currentPage, setCurrentPage] = useState(1);
@@ -15,8 +16,9 @@ const Listarticles = () => {
         itemsPerPage:itemsPerPage
       };
     dispatch(getArticlespages(mesParams))
-
+    
     },[currentPage])
+    
     useEffect(() => {
         listproduits()
         }, [listproduits])

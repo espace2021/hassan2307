@@ -30,7 +30,39 @@ router.get('/', async (req, res, )=> {
 
 });
 
+// afficher la liste des articles par page
+router.get('/productspage/', async(req, res) => {
 
+    const page = req.query.page || 1; // Get the current page number from the query parameters
+    const pagesize = req.query.pagesize ||5; // Number of items per page
+    
+    // Calculez le nombre d'éléments à sauter (offset)
+    const offset = (page - 1) * pagesize;
+    try {
+    // Effectuez la requête à votre source de données en utilisant les paramètres de pagination
+    const articles = await Article.find( {}, null, {sort: {'_id': -1}})
+      .skip(offset)
+      .limit(pagesize)
+     
+    
+      res.status(200).json(articles);
+  } catch (error) {
+      res.status(404).json({ message: error.message });
+  }
+  });
+ 
+  // nombre total des enregistrements
+router.get('/nombreTot/', async (req, res, )=> {
+    try {
+        const articles = await Article.find().exec();
+                
+        res.status(200).json({tot:articles.length});
+    } catch (error) {
+        res.status(404).json({ message: error.message });
+    }
+  
+  });
+  
 // 2 ème solution paginate avec filtre
 
 router.get('/filtres/', async(req, res) => {
