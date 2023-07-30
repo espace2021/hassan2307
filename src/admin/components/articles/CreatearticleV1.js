@@ -46,7 +46,7 @@ useEffect(() => {
 dispatch(getScategories());
 },[dispatch]);
 
-const handleSubmit = () => {
+const handleSubmit = (url) => {
 
   const article={
   reference: reference,
@@ -54,7 +54,7 @@ const handleSubmit = () => {
   prix: prix,
   marque: marque,
   qtestock: qtestock,
-  imageart: imageart,
+  imageart: url,
   scategorieID: scategorieID
   }
   dispatch(createArticle(article))
@@ -98,48 +98,33 @@ const handleSubmit = () => {
     event.preventDefault();
     const form = event.currentTarget;
    if (form.checkValidity() === true) {
-          if (!imageart) {
+          if (!file[0].file) {
               alert("Please upload an image first!");
           }
           else {
-            handleSubmit()
+            console.log(file[0].file)
+            resultHandleUpload(file[0].file,event);
         }
-   
+        if (!file[0].file) {
+          alert("Please upload an image first!");
+      }
+    
    setValidated(true);
   };
   }
   
-  const resultHandleUpload = async(file,load) => {
+  const resultHandleUpload = async(file) => {
     
     try {
      
     const url =  await UploadFirebase(file, setUploadProgress);
-    console.log(url)
-   if (url){
-    load(url);
-    setImageart(url)
-   } 
- 
+    
+    handleSubmit(url)
    } catch (error) {
       console.log(error);
    }
   
   }
-
-  const process = (
-    fieldName,
-      file,
-      metadata,
-      load,
-      error,
-      progress,
-      abort,
-      transfer,
-      options
-    ) => {
-      resultHandleUpload(file,load);
-      
-      }
 
   return (
     <>
@@ -241,11 +226,10 @@ const handleSubmit = () => {
                 files={file}
                 allowMultiple={false}
                 onupdatefiles={setFile}
-                labelIdle='Drag & Drop your files or <span className="filepond--label-action">Browse One</span>'
-                server={{ process }}
-                name="file"
-          />
-   <Line percent={uploadProgress} strokeWidth={2} strokeColor="#008000" />           
+                labelIdle='<span className="filepond--label-action">Browse One</span>'
+              
+              />
+             
   </Form.Group>
   <Form.Group as={Col} md="12">
   <Form.Label>S/Catégorie</Form.Label>
@@ -266,7 +250,7 @@ const handleSubmit = () => {
   </div>
   </Modal.Body>
   <Modal.Footer>
-  
+  <Line percent={uploadProgress} strokeWidth={3} strokeColor="#ff0000" /> 
   <Button variant="secondary" onClick={handleClose}>
   Fermer
   </Button>
