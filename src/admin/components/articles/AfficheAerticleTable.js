@@ -8,6 +8,10 @@ import {delArticle} from "../../../features/articleSlice"
 import {useDispatch} from "react-redux";
 import { MaterialReactTable } from 'material-react-table';
 import { Box } from '@mui/material';
+
+import ModalImage from "react-modal-image";
+
+
 const AfficheAerticleTable = () => {
 
     const dispatch=useDispatch()
@@ -55,6 +59,7 @@ const AfficheAerticleTable = () => {
                     gap: '1rem',
                   }}
                 >
+                 {/*
                   <img
                     alt=""
                     height={60}
@@ -62,8 +67,12 @@ const AfficheAerticleTable = () => {
                     loading="lazy"
                     style={{ borderRadius: '20%' }}
                   />
-                 
-                  
+                 */}
+                 <ModalImage
+  small={cell.getValue()}
+  large={cell.getValue()}
+  alt="image"
+/>;
                 </Box>),
             },
           {
