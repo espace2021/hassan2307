@@ -11,6 +11,9 @@ import PageCarousel from './components/carousel/pageCarousel'
 //import PageProSideBar from './admin/components/PageProSideBar'
 import PageReactStrap from './reactstrapcards/PageReactStrap'
 
+import Home from './components/pageHome/Home'
+import CarouselSCategories from './components/pageHome/carouselSCategories'
+
 function App() {
   return (
     <div className="App">
@@ -26,7 +29,8 @@ function App() {
         <Route path='/ajoutC' element={<AjoutC/>}/>
         <Route path='/pageCarousel' element={<PageCarousel/>}/>
         <Route path='/pageReactStrap' element={<PageReactStrap/>}/>
-     
+        <Route path='/' element={<Home/>}/>
+        <Route path='/selectedCateg/:id' element={<CarouselSCategories/>}/>
       </Routes>
      
       </Router>
