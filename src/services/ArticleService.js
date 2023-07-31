@@ -28,3 +28,7 @@ export const fetchArticlesPagServ=async(page,pageSize)=> {
 export const fetchTot=async()=> {
     return await Api.get(ARTICLE_API+"/nombreTot/");
     } 
+
+export const fetchArticleByScat=async(scategorieID)=> {
+        return await Api.get(ARTICLE_API + '/scat/' + scategorieID);
+        }    

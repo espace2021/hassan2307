@@ -1,5 +1,5 @@
 import { createSlice,createAsyncThunk } from '@reduxjs/toolkit'
-import {fetchArticles,fetchArticlesPagServ,addArticle,deleteArticle,editArticle,fetchArticleById,fetchTot} from "../services/ArticleService"
+import {fetchArticles,fetchArticlesPagServ,addArticle,deleteArticle,editArticle,fetchArticleById,fetchTot,fetchArticleByScat} from "../services/ArticleService"
 
 export const getArticles = createAsyncThunk(
     "article/getArticles",
@@ -96,6 +96,20 @@ export const findArticleByID = createAsyncThunk(
     return rejectWithValue(error.message);
   }
   });
+
+  export const findArticleByScat = createAsyncThunk(
+    "article/findArticleByScat",
+    async (id,thunkAPI) => {
+      const { rejectWithValue } = thunkAPI;
+      try{
+      const res = await fetchArticleByScat(id);
+     
+      return res.data;
+    }
+    catch (error) {
+      return rejectWithValue(error.message);
+    }
+    });
 
 export const articleSlice = createSlice({
     name: 'article',
@@ -229,7 +243,21 @@ state.success=action.payload;
 
   state.error = action.payload;
 
-});
+  
+})
+//Fectch article by Scat
+.addCase(findArticleByScat.pending, (state, action) => {
+  state.isLoading = true
+  state.error=null;   
+    
+  })
+.addCase(
+  findArticleByScat.fulfilled,(state, action) => {
+  state.isLoading = false
+  state.error = null
+  state.articles=action.payload;
+})
+
     }
         
     }
