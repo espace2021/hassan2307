@@ -6,12 +6,18 @@ const categorieRouter =require("./routes/categorie.route")
 const scategorieRouter =require("./routes/scategorie.route")
 const articleRouter=require('./routes/article.route')
 
+
+// Initialize compression module
+const compression = require('compression');
+
 dotenv.config()
 const app = express();
 //BodyParser Middleware
 app.use(express.json());
 app.use(cors())
 
+// Compress all HTTP responses
+app.use(compression());
 
 mongoose.set("strictQuery", false);
 // Connexion à la base données
